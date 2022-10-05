@@ -1,11 +1,13 @@
 import React from 'react'
 import { useState } from 'react'
 import { ReactQueryDevtools } from 'react-query/devtools'
+import useDebounce from './hooks/useDebounce'
 import usePosts from './hooks/usePosts'
 
 const App = () => {
   const [inputValue, setInputValue] = useState('')
-  const { isLoading, data, error } = usePosts(inputValue)
+  const debouncedSearchedValue = useDebounce(inputValue, 600)
+  const { isLoading, data, error } = usePosts(debouncedSearchedValue)
 
   return (
     <div className="container">
